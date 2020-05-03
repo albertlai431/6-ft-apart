@@ -12,8 +12,8 @@ public class ScoreText extends Actor
      * Act - do whatever the ScoreText wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    GreenfootImage maskImg = new GreenfootImage((new FaceMask()).getImage());
-    GreenfootImage sanitizerImg = new GreenfootImage((new Sanitizer()).getImage());
+    GreenfootImage maskImg = new GreenfootImage("facemask.png");
+    GreenfootImage sanitizerImg = new GreenfootImage("sanitizer.png");
     public static int score = 0;
     public static int masks = 3;
     public static int sanitizer = 3;
@@ -35,20 +35,24 @@ public class ScoreText extends Actor
     }
     public void addMask(int num){
         masks+=num;
+        update();
     }
     public void addSanitizer(int num){
         sanitizer+=num;
+        update();
     }
     public static int getScore(){
         return score;
     }
     public void setScore(int score){
         this.score = score;
+        update();
     }
     public void addScore(int num){
         score+=num;
+        update();
     }
-    public void act() 
+    public void update() 
     {
         //constantly updates the score and masks and sanitizers
         scoreBoard.fill();

@@ -29,12 +29,12 @@ public class MissionBox extends Actor
         if(item.size()==1){
             fontSize = 11;
         }
-        missionBox = new GreenfootImage(item.size()*(itemImg.getWidth()-15)+10,itemImg.getHeight());
+        missionBox = new GreenfootImage(5*(itemImg.getWidth()-15)+10,itemImg.getHeight());
         
         missionBox.fill();
         for(int i = 0;i<item.size();i++){
             itemImg = item.get(i).getImage();
-            itemImg.scale(missionBox.getHeight()-15,missionBox.getHeight()-15);
+            //itemImg.scale(missionBox.getHeight()-15,missionBox.getHeight()-15);
             missionBox.drawImage(itemImg,i*itemImg.getWidth()+5,missionBox.getHeight()-itemImg.getHeight());
         }
         missionBox.drawImage(new GreenfootImage("Mission "+missionNum, fontSize,Color.WHITE,Color.BLACK), 0,0);
