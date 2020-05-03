@@ -35,18 +35,18 @@ public class StoreWorld extends World
         addObject(new Shopper(1), 300, 350);
         addObject(player, 100, 100);
         addObject(missionBox, 200, 50);
-        addObject(new Freezer(10, 300), 500, 200);
+        addObject(new Freezer(10, 200), 590, 200);
         addObject(new Shelf(200, 20), 300, 100);
-        addObject(new Shelf(200, 20), 200, 250);
+        addObject(new Shelf(200, 20), 300, 250);
         addObject(new Washroom(), 550, 350);
-        addObject(scoreText, 500, 300);
+        addObject(scoreText, 500, 375);
     }
 
     private void nextMission() {
         scoreText.addScore((mission - 1) / 5);
         player.newMission();
         if ((mission - 1) / 5 == 0) {
-            // TODO add another shopper after every 5 missions
+            addObject(new Shopper((mission - 1) / 5 + 1), 0, 300);
         }
 
         // generate the new list of items to collect
@@ -68,7 +68,7 @@ public class StoreWorld extends World
             } else {
                 String itemName = FREEZER_ITEMS[Greenfoot.getRandomNumber(FREEZER_ITEMS.length)];
                 Food food = new Food(itemName);
-                itemsToCollect.add(new Food(itemName));
+                itemsToCollect.add(food);
                 List<Freezer> freezers = getObjects(Freezer.class);
                 Freezer freezer = freezers.get(Greenfoot.getRandomNumber(freezers.size()));
                 int x = freezer.getX() - freezer.getImage().getWidth() / 2 - 1;
@@ -80,13 +80,13 @@ public class StoreWorld extends World
         }
         
         // potentially add a powerup
-        if (getObjects(Sanitizer.class).size() == 0 && Greenfoot.getRandomNumber(mission % 5 + 2) == 0) {
+        if (getObjects(Sanitizer.class).size() == 0 && Greenfoot.getRandomNumber(mission / 5 + 2) == 0) {
             List<Shelf> shelves = getObjects(Shelf.class);
             Shelf shelf = shelves.get(Greenfoot.getRandomNumber(shelves.size()));
             int x = shelf.getX() - shelf.getImage().getWidth() / 2 + Greenfoot.getRandomNumber(2) * shelf.getImage().getWidth();
             int y = shelf.getY() - shelf.getImage().getHeight() / 2 + Greenfoot.getRandomNumber(2) * shelf.getImage().getHeight();
             addObject(new Sanitizer(), x, y);
-        } else if (getObjects(FaceMask.class).size() == 0 && Greenfoot.getRandomNumber(mission % 5 + 2) == 0) {
+        } else if (getObjects(FaceMask.class).size() == 0 && Greenfoot.getRandomNumber(mission / 5 + 2) == 0) {
             List<Shelf> shelves = getObjects(Shelf.class);
             Shelf shelf = shelves.get(Greenfoot.getRandomNumber(shelves.size()));
             int x = shelf.getX() - shelf.getImage().getWidth() / 2 + Greenfoot.getRandomNumber(2) * shelf.getImage().getWidth();
@@ -108,8 +108,9 @@ public class StoreWorld extends World
             if (itemsToCollect.size() == 0) {
                 nextMission();
             }
+            System.out.println("updatinggg");
             missionBox.update(mission, itemsToCollect);
-        }
+        } else System.out.println("not there");
         
         removeObject(item);
     }

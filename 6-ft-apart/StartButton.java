@@ -9,7 +9,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class StartButton extends Actor
 {
     public StartButton() {
-        this.setImage(new GreenfootImage("  START  ", 30, Color.DARK_GRAY, Color.RED));    
+        this.setImage("6ftButton.PNG");
+        GreenfootImage image = getImage();
+        image.scale(200, 200);
+        setImage(image);
     }
 
     /**
@@ -19,9 +22,15 @@ public class StartButton extends Actor
     public void act() 
     {
         // hover behaviour
-        if (Greenfoot.mouseMoved(this)) setImage(new GreenfootImage("  START  ", 30, Color.DARK_GRAY, Color.ORANGE));
-        else if (Greenfoot.mouseMoved(null)) setImage(new GreenfootImage("  START  ", 30, Color.DARK_GRAY, Color.RED));
-
+        if (Greenfoot.mouseMoved(this)) setImage("6ftHover.PNG");
+        else if (Greenfoot.mouseMoved(null)) setImage("6ftButton.PNG");
+        
+        GreenfootImage image = getImage();
+        image.scale(200, 200);
+        setImage(image);
+        
+        setLocation(150,250);
+        
         if (Greenfoot.mouseClicked(this)) Greenfoot.setWorld(new StoreWorld());
     }    
 }

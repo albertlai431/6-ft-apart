@@ -26,8 +26,6 @@ public class TitleWorld extends World
      */
     private void prepare()
     {
-        TitleText titleText = new TitleText();
-        addObject(titleText,getWidth() / 2 , titleText.getImage().getHeight());
-        addObject(new StartButton(), getWidth() / 2, getHeight() / 2);
+        addObject(new StartButton(), 150, 250);
     }
 }
