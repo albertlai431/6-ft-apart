@@ -46,7 +46,7 @@ public class StoreWorld extends World
         scoreText.addScore((mission - 1) / 5);
         player.newMission();
         if ((mission - 1) / 5 == 0) {
-            addObject(new Shopper((mission - 1) % 5 + 8), 0, 300);
+            addObject(new Shopper((mission - 1) % 5 + 6), 0, 300);
         }
 
         // generate the new list of items to collect
