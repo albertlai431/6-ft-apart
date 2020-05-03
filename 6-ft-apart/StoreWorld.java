@@ -35,7 +35,7 @@ public class StoreWorld extends World
         addObject(new Player(), 200, 200);
         addObject(missionBox, 100, 100);
         addObject(new Freezer(), 100, 200);
-        addObject(new Shelf(), 300, 100);
+        addObject(new Shelf(100,100), 300, 100);
         addObject(new Washroom(), 550, 350);
     }
 
