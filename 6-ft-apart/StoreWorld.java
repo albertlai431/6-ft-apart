@@ -31,10 +31,6 @@ public class StoreWorld extends World
     private void prepare() {
     }
     
-    @Override
-    public void act() {
-
-    }
 
     /**
      * Call this when the player collides with an item to pick up
@@ -58,9 +54,20 @@ public class StoreWorld extends World
 
                 for (int i = 0; i < numOfItemsToCollect; i++) {
                     // Generate a new Item for itemsToCollect[i], place them in the World
+                    if (Greenfoot.getRandomNumber(2) == 1) {
+                        String itemName = SHELF_ITEMS[Greenfoot.getRandomNumber(SHELF_ITEMS.length)];
+                        itemsToCollect.add(new Food(itemName));
+                        // TODO add to shelf
+                    } else {
+                        String itemName = FREEZER_ITEMS[Greenfoot.getRandomNumber(FREEZER_ITEMS.length)];
+                        itemsToCollect.add(new Food(itemName));
+                        // TODO add to freezer
+                    }
                 }
                 mission++;
             }
+            
+            missionBox.update(mission, itemsToCollect);
         }
     }
 
