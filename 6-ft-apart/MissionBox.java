@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.ArrayList;
 /**
  * Write a description of class MissionBox here.
  * 
@@ -22,15 +22,15 @@ public class MissionBox extends Actor
         setImage(missionBox);
     }
     
-    public void update(int missionNum, Actor[] item){
-        if(item.length==1){
+    public void update(int missionNum, ArrayList<Item> item){
+        if(item.size()==1){
             fontSize = 11;
         }
-        missionBox = new GreenfootImage(item.length*(itemImg.getWidth()-15)+10,itemImg.getHeight());
+        missionBox = new GreenfootImage(item.size()*(itemImg.getWidth()-15)+10,itemImg.getHeight());
         missionBox.setColor(new Color(213,172, 11));
         missionBox.fill();
-        for(int i = 0;i<item.length;i++){
-            itemImg = item[i].getImage();
+        for(int i = 0;i<item.size();i++){
+            itemImg = item.get(i).getImage();
             itemImg.scale(missionBox.getHeight()-15,missionBox.getHeight()-15);
             missionBox.drawImage(itemImg,i*itemImg.getWidth()+5,missionBox.getHeight()-itemImg.getHeight());
         }
