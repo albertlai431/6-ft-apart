@@ -8,13 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Freezer extends Obstacle
 {
-    /**
-     * Act - do whatever the Freezer wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-        setLocation(getWorld().getWidth()/2,getWorld().getHeight()/2);
-        
-    }    
+    public Freezer(int width, int height) {
+        super(width, height);
+    } 
 }
