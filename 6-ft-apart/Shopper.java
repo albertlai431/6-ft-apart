@@ -28,14 +28,17 @@ public class Shopper extends Actor implements AnimationInterface
 
     private int level;
     public int speed;
+    private int random;
+    private int dx, dy;
 
     //If we scale stuff this won't work!!
     private int width = getImage().getWidth();
     private int height = getImage().getHeight();
 
-    private Radius radius = new Radius();
+    private Radius radius;
     private static boolean createdImages = false;
     private int frameRate = 7;
+    private int length = 0;
     private int imageNumber = 0;
     private long animationCount = 0;
 
@@ -45,13 +48,14 @@ public class Shopper extends Actor implements AnimationInterface
         this.level = level;
         this.speed = level;        
         if(!createdImages) createImages();
-        
+
         if(level==1) setImage(downMvt1[0]);
         else if(level==2) setImage(downMvt2[0]);
         else setImage(downMvt3[0]);
     }
 
     public void addedToWorld (World w){
+        radius = new Radius(this);
         getWorld().addObject(radius,getX(),getY());
     }    
 
@@ -65,18 +69,18 @@ public class Shopper extends Actor implements AnimationInterface
             {
                 rightMvt1[i-1] = new GreenfootImage("Walking Sprites/EA-R"+i+".png");
                 leftMvt1[i-1] = new GreenfootImage("Walking Sprites/EA-L"+i+".png");
-                upMvt1[i-1] = new GreenfootImage("Walking Sprites/EA-B"+i+".png");
-                downMvt1[i-1] = new GreenfootImage("Walking Sprites/EA-F"+i+".png");
+                downMvt1[i-1] = new GreenfootImage("Walking Sprites/EA-B"+i+".png");
+                upMvt1[i-1] = new GreenfootImage("Walking Sprites/EA-F"+i+".png");
 
                 rightMvt2[i-1] = new GreenfootImage("Walking Sprites/EB-R"+i+".png");
                 leftMvt2[i-1] = new GreenfootImage("Walking Sprites/EB-L"+i+".png");
-                upMvt2[i-1] = new GreenfootImage("Walking Sprites/EB-B"+i+".png");
-                downMvt2[i-1] = new GreenfootImage("Walking Sprites/EB-F"+i+".png");
+                downMvt2[i-1] = new GreenfootImage("Walking Sprites/EB-B"+i+".png");
+                upMvt2[i-1] = new GreenfootImage("Walking Sprites/EB-F"+i+".png");
 
                 rightMvt3[i-1] = new GreenfootImage("Walking Sprites/EC-R"+i+".png");
                 leftMvt3[i-1] = new GreenfootImage("Walking Sprites/EC-L"+i+".png");
-                upMvt3[i-1] = new GreenfootImage("Walking Sprites/EC-B"+i+".png");
-                downMvt3[i-1] = new GreenfootImage("Walking Sprites/EC-F"+i+".png");
+                downMvt3[i-1] = new GreenfootImage("Walking Sprites/EC-B"+i+".png");
+                upMvt3[i-1] = new GreenfootImage("Walking Sprites/EC-F"+i+".png");
             }
             /*
             for(int i=0; i<rightMvt.length;i++)
@@ -105,39 +109,55 @@ public class Shopper extends Actor implements AnimationInterface
         move();
 
         //Radius
-        if(getObjectsInRange(100,Player.class).size()>0){
-            radius.getImage().setTransparency(150);
-            ArrayList <Player> playerList = (ArrayList) getObjectsInRange(Radius.radius,Player.class);
-            if(playerList.size()>0){
-                playerList.get(0).isTouchingShopper();
-            }    
-        }    
+        if(getObjectsInRange(150,Player.class).size()>0) radius.getImage().setTransparency(150);
         else radius.getImage().setTransparency(0);
     }    
 
     private void move(){
         if(animationCount%frameRate == 0){
-            int dx = 0, dy = 0;
-            int random = Greenfoot.getRandomNumber(4);
-            if(random==0){
-                animateMovementUp();
-                dy = -speed;
-            }    
-            else if(random==1){
-                animateMovementDown();
-                dy = speed;
-            }    
-            else if(random==2){
-                animateMovementLeft();
-                dx = -speed;
-            }    
+            if(length>0){
+                length--;
+                if(random==0){
+                    animateMovementUp();
+                }    
+                else if(random==1){
+                    animateMovementDown();
+                }    
+                else if(random==2){
+                    animateMovementLeft();
+                }    
+                else{
+                    animateMovementRight();
+                }
+            }
             else{
-                animateMovementRight();
-                dx = speed;
-            }    
+                dx = 0;
+                dy = 0;
+                random = Greenfoot.getRandomNumber(4);
+                length = Greenfoot.getRandomNumber(20)+5;
+                if(random==0){
+                    animateMovementUp();
+                    dy = -speed;
+                }    
+                else if(random==1){
+                    animateMovementDown();
+                    dy = speed;
+                }    
+                else if(random==2){
+                    animateMovementLeft();
+                    dx = -speed;
+                }    
+                else{
+                    animateMovementRight();
+                    dx = speed;
+                }
+            }
 
             setLocation(getX()+dx,getY()+dy);
-            if(invalidMove()) setLocation(getX()-dx,getY()-dy);
+            if(invalidMove()){
+                setLocation(getX()-dx,getY()-dy);
+                length=0;
+            }    
         }
     }    
 
