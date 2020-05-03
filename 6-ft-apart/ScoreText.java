@@ -25,6 +25,8 @@ public class ScoreText extends Actor
         masks = 3;
         sanitizer = 3;
         scoreBoard.fill();
+        maskImg.scale(scoreBoard.getHeight(), scoreBoard.getHeight());
+        sanitizerImg.scale(scoreBoard.getHeight(), scoreBoard.getHeight());
         setImage(scoreBoard);
     }
     public int getMasks(){
