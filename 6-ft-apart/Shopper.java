@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Write a description of class Shopper here.
@@ -11,6 +12,8 @@ public class Shopper extends Actor implements AnimationInterface
     private int level;
     public int speed;
     private boolean target;
+    
+    private Radius radius = new Radius();
     
     //declare imgs and stuff
     
@@ -29,6 +32,8 @@ public class Shopper extends Actor implements AnimationInterface
             this.speed = 2;
             this.target = true;
         }    
+        
+        getWorld().addObject(radius,getX(),getY());
     }
     
     /**
@@ -38,6 +43,16 @@ public class Shopper extends Actor implements AnimationInterface
     public void act() 
     {
         //figure out animation stuff
+        
+        //Radius
+        if(getObjectsInRange(100,Player.class).size()>0){
+            radius.getImage().setTransparency(150);
+            ArrayList <Player> playerList = (ArrayList) getObjectsInRange(Radius.radius,Player.class);
+            if(playerList.size()>0){
+                playerList.get(0).isTouchingShopper();
+            }    
+        }    
+        else radius.getImage().setTransparency(0);
     }    
     
     public void animateMovementUp(){

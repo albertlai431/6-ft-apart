@@ -13,7 +13,7 @@ public class Player extends Actor implements AnimationInterface
     private static GreenfootImage[] leftMvt = new GreenfootImage[5];
     private static GreenfootImage[] upMvt = new GreenfootImage[8];
     private static GreenfootImage[] downMvt = new GreenfootImage[8];
-    
+
     public int sanitizerCount = 0;
     public int maskCount = 0;
     private int speed = 2;
@@ -21,16 +21,16 @@ public class Player extends Actor implements AnimationInterface
     private int height = getImage().getHeight();
     private boolean isInfected = false;
     private long animationCount = 0;
-    
+
     private static boolean createdImages = false;
     private static final int scaleNumber = 100;
-    
+
     private Timer timer;
-    
+
     public Player(){
         if(!createdImages) createImages();
     }    
-    
+
     /**
      * createImages - create images used by player class if not already done so
      */
@@ -65,19 +65,19 @@ public class Player extends Actor implements AnimationInterface
 
         }
     }    
-    
+
     public void animateMovementUp(){
     }    
-    
+
     public void animateMovementDown(){
     }    
-    
+
     public void animateMovementLeft(){
     }    
-    
+
     public void animateMovementRight(){
     }    
-    
+
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -90,7 +90,7 @@ public class Player extends Actor implements AnimationInterface
         isInfected();
         isTouchingItem();
     }    
-    
+
     /**
      * move - moves the player depending on keyboard input along with wall/door detection
      */
@@ -147,8 +147,7 @@ public class Player extends Actor implements AnimationInterface
         //checks for invalid move
         if(invalidMove()) setLocation(getX()-dx,getY()-dy);
     } 
-    
-    
+
     
     /**
      * invalidMove - checks if the last move was invalid
@@ -165,7 +164,7 @@ public class Player extends Actor implements AnimationInterface
         }
         return false;
     }    
-    
+
     /**
      * loseOneSanitizer - takes one sanitizer away from the player
      * 
@@ -178,28 +177,27 @@ public class Player extends Actor implements AnimationInterface
         if(sanitizerCount==0) return true;
         return false;
     }
-    
+
     private void addOneSanitizer(){
         sanitizerCount++;
         //increment scorebar
     }    
-    
+
     /**
      * Checks if player is touching shopper
      */
-    private void isTouchingShopper(){
-        if(isTouching(Shopper.class)){
-            if(isInfected){
-                timer.removeTime();
-            }
-            else{
-                isInfected = true;
-                timer = new Timer(5000);
-                getWorld().addObject(timer,100,100); //To be changed!
-            }
-        }    
+    public void isTouchingShopper(){
+        if(isInfected){
+            timer.removeTime();
+        }
+        else{
+            isInfected = true;
+            timer = new Timer(5000);
+            getWorld().addObject(timer,100,100); //To be changed!
+        }
+
     }    
-    
+
     /**
      * What to do if player is infected
      */
@@ -214,7 +212,7 @@ public class Player extends Actor implements AnimationInterface
             }    
         }
     }    
-    
+
     private void isTouchingItem(){
         if(isTouching(Item.class)){
             if(isTouching(Sanitizer.class)){
