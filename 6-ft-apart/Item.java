@@ -6,14 +6,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Item extends Actor
+public abstract class Item extends Actor
 {
-    /**
-     * Act - do whatever the Item wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-        // Add your action code here.
+    
+    private String imgName;
+    
+    public Item(String imgName){
+        this.imgName = imgName;
+        setImage(imgName+".png");
     }    
+    
+    public String getName(){
+        return imgName;
+    }
 }

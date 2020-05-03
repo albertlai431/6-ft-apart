@@ -9,16 +9,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Food extends Item
 {
     
+    private String imgName;
+    
     public Food(String name) {
-        // perhaps some sort of HashMap that has food name mapped to image file name
+        super(name);
+        imgName = name;
     }
     
-    /**
-     * Act - do whatever the Food wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-        // Add your action code here.
-    }    
+    
 }

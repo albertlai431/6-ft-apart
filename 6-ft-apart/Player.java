@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author Albert
  * @version May 2020
  */
-public class Player extends Actor
+public class Player extends Actor implements AnimationInterface
 {
     //animation images
     private static GreenfootImage[] rightMvt = new GreenfootImage[5];
@@ -20,8 +20,63 @@ public class Player extends Actor
     private int width = getImage().getWidth();
     private int height = getImage().getHeight();
     private boolean isInfected = false;
+    private long animationCount = 0;
+    
+    private static boolean createdImages = false;
+    private static final int scaleNumber = 100;
     
     private Timer timer;
+    
+    public Player(){
+        if(!createdImages) createImages();
+    }    
+    
+    /**
+     * createImages - create images used by player class if not already done so
+     */
+    public static void createImages(){
+        if(!createdImages){
+            createdImages = true;
+            for(int i=0; i<rightMvt.length; i++)
+            {
+                rightMvt[i] = new GreenfootImage("pilotRight"+i+".png");
+                leftMvt[i] = new GreenfootImage("pilotRight"+i+".png");
+            }
+            for(int i=0; i<leftMvt.length; i++)
+            {
+                leftMvt[i].mirrorHorizontally();
+            }
+            for(int i=0; i<upMvt.length; i++)
+            {
+                upMvt[i] = new GreenfootImage("pilotUp"+i+".png");
+                downMvt[i] = new GreenfootImage("pilotDown"+i+".png");
+            }
+
+            for(int i=0; i<rightMvt.length;i++)
+            {
+                rightMvt[i].scale(rightMvt[i].getWidth()*scaleNumber/100,rightMvt[i].getHeight()*scaleNumber/100);
+                leftMvt[i].scale(leftMvt[i].getWidth()*scaleNumber/100,leftMvt[i].getHeight()*scaleNumber/100);
+            }
+            for(int i=0; i<upMvt.length;i++)
+            {
+                upMvt[i].scale(upMvt[i].getWidth()*scaleNumber/100,upMvt[i].getHeight()*scaleNumber/100);
+                downMvt[i].scale(downMvt[i].getWidth()*scaleNumber/100,downMvt[i].getHeight()*scaleNumber/100);
+            }
+
+        }
+    }    
+    
+    public void animateMovementUp(){
+    }    
+    
+    public void animateMovementDown(){
+    }    
+    
+    public void animateMovementLeft(){
+    }    
+    
+    public void animateMovementRight(){
+    }    
     
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
@@ -29,6 +84,7 @@ public class Player extends Actor
      */
     public void act() 
     {
+        animationCount++;
         move();
         isTouchingShopper();
         isInfected();
@@ -91,6 +147,8 @@ public class Player extends Actor
         //checks for invalid move
         if(invalidMove()) setLocation(getX()-dx,getY()-dy);
     } 
+    
+    
     
     /**
      * invalidMove - checks if the last move was invalid

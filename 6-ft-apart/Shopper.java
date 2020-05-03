@@ -6,17 +6,28 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author Albert 
  * @version May 2020
  */
-public class Shopper extends Actor
+public class Shopper extends Actor implements AnimationInterface
 {
     private int level;
     public int speed;
     private boolean target;
     
+    //declare imgs and stuff
+    
     public Shopper(int level){
         this.level = level;
         
         if(level == 1){
-            speed = 1;
+            this.speed = 1;
+            this.target = false;
+        }    
+        else if(level == 2){
+            this.speed = 2;
+            this.target = false;
+        }
+        else{
+            this.speed = 2;
+            this.target = true;
         }    
     }
     
@@ -26,6 +37,18 @@ public class Shopper extends Actor
      */
     public void act() 
     {
-        // Add your action code here.
+        //figure out animation stuff
     }    
+    
+    public void animateMovementUp(){
+    }    
+    
+    public void animateMovementDown(){
+    }    
+    
+    public void animateMovementLeft(){
+    }    
+    
+    public void animateMovementRight(){
+    }
 }
