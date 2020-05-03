@@ -34,7 +34,7 @@ public class MissionBox extends Actor
         missionBox.fill();
         for(int i = 0;i<item.size();i++){
             itemImg = item.get(i).getImage();
-            itemImg.scale(missionBox.getHeight()-15,missionBox.getHeight()-15);
+            itemImg.scale(50,50);
             missionBox.drawImage(itemImg,i*(itemImg.getWidth()+5),missionBox.getHeight()-itemImg.getHeight());
         }
         missionBox.drawImage(new GreenfootImage("Mission "+missionNum, fontSize,Color.WHITE,Color.BLACK), 0,0);
