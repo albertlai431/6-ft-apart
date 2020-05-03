@@ -1,5 +1,7 @@
 #Greenfoot project file
+class.Freezer.image=Freezer.png
 class.Player.image=man01.png
+class.Shelf.image=Shelf.png
 class.Shopper.image=person.png
 class.TitleWorld.image=brick.jpg
 dependency1.from=StoreWorld
