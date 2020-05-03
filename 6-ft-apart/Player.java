@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Write a description of class Player here.
@@ -119,6 +120,7 @@ public class Player extends Actor implements AnimationInterface
         move();
         isInfected();
         isTouchingItem();
+        getMask();
     }    
 
     /**
@@ -203,7 +205,7 @@ public class Player extends Actor implements AnimationInterface
     {
         StoreWorld w = (StoreWorld) getWorld();
         if(w.decrementSanitizerCount()){
-            //gameover
+            Greenfoot.setWorld(new GameOver());
         }    
     }
 
@@ -227,15 +229,16 @@ public class Player extends Actor implements AnimationInterface
                 isInfected = false;
                 getWorld().removeObject(timer);
             }    
-            else if(timer==null){
+            else if(timer==null || timer.getWorld()==null){
                 loseOneSanitizer();
+                isInfected = false;
             }    
         }
     }    
 
     private void isTouchingItem(){
-        Item i = (Item) getOneObjectAtOffset(0, 0, Item.class);
-        if(i!=null){
+        if(getObjectsInRange(height,Item.class).size()>0){
+            Item i = (Item) getObjectsInRange(height,Item.class).get(0);
             StoreWorld w = (StoreWorld) getWorld();
             w.pickUpItem(i);
             if(isTouching(Sanitizer.class)){
@@ -244,13 +247,13 @@ public class Player extends Actor implements AnimationInterface
             else if(isTouching(FaceMask.class)){
                 w.incrementMaskCount();
             }    
-        }    
+        }
     }    
 
     private void getMask(){
         if(Greenfoot.isKeyDown("m")){
             StoreWorld w = (StoreWorld) getWorld();
-            if(true && !isInfected){ //w.decrementMaskCount()
+            if(!maskOn && !isInfected && !w.decrementMaskCount()){ 
                 maskOn = true;
             }    
         }    
