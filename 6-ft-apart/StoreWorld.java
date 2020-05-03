@@ -9,7 +9,6 @@ import java.util.*;
 public class StoreWorld extends World
 {
     private int mission = 0; // it will go up to 1 in the constructor after calling nextMission the first time
-    private int score = 0;
     private ArrayList<Item> itemsToCollect = new ArrayList<Item>();
     private final int MAX_ITEMS = 4;
     private final String[]SHELF_ITEMS = {
@@ -20,8 +19,7 @@ public class StoreWorld extends World
         };
 
     private MissionBox missionBox = new MissionBox();
-    private int sanitizerCount = 3;
-    private int maskCount = 0;
+    private ScoreText scoreText = new ScoreText();
     public StoreWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -42,7 +40,7 @@ public class StoreWorld extends World
     }
 
     private void nextMission() {
-        score += (mission - 1) / 5;
+        scoreText.addScore((mission - 1) / 5);
         if ((mission - 1) / 5 == 0) {
             // TODO add another shopper after every 5 missions
         }
@@ -115,41 +113,26 @@ public class StoreWorld extends World
     }
     
     public void incrementSanitizerCount() {
-        sanitizerCount++;
+        scoreText.addSanitizer(1);
     }
     
     public boolean decrementSanitizerCount() {
-        sanitizerCount--;
-        return sanitizerCount == 0;
+        scoreText.addSanitizer(-1);
+        return scoreText.getSanitizer() == 0;
     }
     
     public void incrementMaskCount() {
-        maskCount++;
+        scoreText.addMask(1);
     }
     
-    public boolean decrementMaskCount() {
-        if (maskCount > 0) {
-            maskCount--;
-            return true;
-        } else {
-            return false;
+    public void decrementMaskCount() {
+        if (scoreText.getMasks() > 0) {
+            scoreText.addMask(-1);
         }
-    }
-    
-    public int getSanitizerCount() {
-        return sanitizerCount;
-    }
-    
-    public int getMaskCount() {
-        return maskCount;
     }
 
     public int getMission() {
         return mission;
-    }
-
-    public int getScore() {
-        return score;
     }
 
 }

@@ -13,12 +13,15 @@ public class MissionBox extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int fontSize = 15;
-    GreenfootImage missionBox = new GreenfootImage(1,1);
+    GreenfootImage missionBox = new GreenfootImage(150,51);
     GreenfootImage itemImg = new GreenfootImage(50,50);
     
     //everytime you make a missionbox instance, call it with the item as a parameter
     
     public MissionBox(){
+        
+        missionBox.setColor(new Color(213,172, 11));
+        missionBox.fill();
         setImage(missionBox);
     }
     
@@ -26,12 +29,12 @@ public class MissionBox extends Actor
         if(item.size()==1){
             fontSize = 11;
         }
-        missionBox = new GreenfootImage(item.size()*(itemImg.getWidth()-15)+10,itemImg.getHeight());
-        missionBox.setColor(new Color(213,172, 11));
+        missionBox = new GreenfootImage(5*(itemImg.getWidth()-15)+10,itemImg.getHeight());
+        
         missionBox.fill();
         for(int i = 0;i<item.size();i++){
             itemImg = item.get(i).getImage();
-            itemImg.scale(missionBox.getHeight()-15,missionBox.getHeight()-15);
+            //itemImg.scale(missionBox.getHeight()-15,missionBox.getHeight()-15);
             missionBox.drawImage(itemImg,i*itemImg.getWidth()+5,missionBox.getHeight()-itemImg.getHeight());
         }
         missionBox.drawImage(new GreenfootImage("Mission "+missionNum, fontSize,Color.WHITE,Color.BLACK), 0,0);
