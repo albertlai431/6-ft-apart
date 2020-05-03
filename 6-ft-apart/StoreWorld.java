@@ -20,6 +20,8 @@ public class StoreWorld extends World
         };
 
     private MissionBox missionBox = new MissionBox();
+    private int sanitizerCount = 3;
+    private int maskCount = 0;
     public StoreWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -46,7 +48,7 @@ public class StoreWorld extends World
         }
 
         // generate the new list of items to collect
-        int numOfItemsToCollect = (mission - 1) / 5 + 1;
+        int numOfItemsToCollect = Math.min(MAX_ITEMS, (mission - 1) / 5 + 1);
 
         itemsToCollect = new ArrayList<Item>();
 
@@ -110,6 +112,36 @@ public class StoreWorld extends World
         }
         
         removeObject(item);
+    }
+    
+    public void incrementSanitizerCount() {
+        sanitizerCount++;
+    }
+    
+    public boolean decrementSanitizerCount() {
+        sanitizerCount--;
+        return sanitizerCount == 0;
+    }
+    
+    public void incrementMaskCount() {
+        maskCount++;
+    }
+    
+    public boolean decrementMaskCount() {
+        if (maskCount > 0) {
+            maskCount--;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public int getSanitizerCount() {
+        return sanitizerCount;
+    }
+    
+    public int getMaskCount() {
+        return maskCount;
     }
 
     public int getMission() {
