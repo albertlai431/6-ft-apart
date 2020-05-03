@@ -9,14 +9,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Shelf extends Obstacle
 {
-    public int width;
-    public int height;
     public Shelf(int width, int height) {
-        GreenfootImage image = getImage();
-        image.scale(width,height);
-        setImage(image);
-        this.width=width;
-        this.height=height;
+        super(width, height);
     }
     /**
      * Act - do whatever the Shelf wants to do. This method is called whenever

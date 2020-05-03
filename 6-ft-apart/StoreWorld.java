@@ -20,6 +20,7 @@ public class StoreWorld extends World
 
     private MissionBox missionBox = new MissionBox();
     private ScoreText scoreText = new ScoreText();
+    private Player player = new Player();
     public StoreWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -31,16 +32,19 @@ public class StoreWorld extends World
     }
 
     private void prepare() {
-        addObject(new Shopper(1), 300, 300);
-        addObject(new Player(), 200, 200);
-        addObject(missionBox, 100, 100);
-        addObject(new Freezer(), 100, 200);
-        addObject(new Shelf(100,100), 300, 100);
+        addObject(new Shopper(1), 300, 350);
+        addObject(player, 100, 100);
+        addObject(missionBox, 200, 50);
+        addObject(new Freezer(10, 300), 500, 200);
+        addObject(new Shelf(200, 20), 300, 100);
+        addObject(new Shelf(200, 20), 200, 250);
         addObject(new Washroom(), 550, 350);
+        addObject(scoreText, 500, 300);
     }
 
     private void nextMission() {
         scoreText.addScore((mission - 1) / 5);
+        player.newMission();
         if ((mission - 1) / 5 == 0) {
             // TODO add another shopper after every 5 missions
         }
@@ -56,21 +60,19 @@ public class StoreWorld extends World
                 String itemName = SHELF_ITEMS[Greenfoot.getRandomNumber(SHELF_ITEMS.length)];
                 Food food = new Food(itemName);
                 itemsToCollect.add(food);
-                // TODO add to shelf
                 List<Shelf> shelves = getObjects(Shelf.class);
                 Shelf shelf = shelves.get(Greenfoot.getRandomNumber(shelves.size()));
-                int x = shelf.getX() - shelf.getImage().getWidth() / 2 + Greenfoot.getRandomNumber(2) * shelf.getImage().getWidth();
-                int y = shelf.getY() - shelf.getImage().getHeight() / 2 + Greenfoot.getRandomNumber(2) * shelf.getImage().getHeight();
+                int x = shelf.getX() - shelf.width / 2 + Greenfoot.getRandomNumber(shelf.width);
+                int y = shelf.getY() - shelf.height / 2 - 1 + Greenfoot.getRandomNumber(2) * (shelf.height + 2);
                 addObject(food, x, y);
             } else {
                 String itemName = FREEZER_ITEMS[Greenfoot.getRandomNumber(FREEZER_ITEMS.length)];
                 Food food = new Food(itemName);
                 itemsToCollect.add(new Food(itemName));
-                // TODO add to freezer
                 List<Freezer> freezers = getObjects(Freezer.class);
                 Freezer freezer = freezers.get(Greenfoot.getRandomNumber(freezers.size()));
-                int x = freezer.getX() - freezer.getImage().getWidth() / 2 + Greenfoot.getRandomNumber(2) * freezer.getImage().getWidth();
-                int y = freezer.getY() - freezer.getImage().getHeight() / 2 + Greenfoot.getRandomNumber(2) * freezer.getImage().getHeight();
+                int x = freezer.getX() - freezer.getImage().getWidth() / 2 - 1;
+                int y = freezer.getY() - freezer.getImage().getHeight() / 2 - 1 + Greenfoot.getRandomNumber(2) * (freezer.getImage().getHeight() + 1);
                 addObject(food, x, y);
             }
             
@@ -117,7 +119,9 @@ public class StoreWorld extends World
     }
     
     public boolean decrementSanitizerCount() {
-        scoreText.addSanitizer(-1);
+        if (scoreText.getSanitizer() > 0) {
+           scoreText.addSanitizer(-1);
+        }
         return scoreText.getSanitizer() == 0;
     }
     
@@ -125,10 +129,11 @@ public class StoreWorld extends World
         scoreText.addMask(1);
     }
     
-    public void decrementMaskCount() {
+    public boolean decrementMaskCount() {
         if (scoreText.getMasks() > 0) {
             scoreText.addMask(-1);
         }
+        return scoreText.getMasks() == 0;
     }
 
     public int getMission() {

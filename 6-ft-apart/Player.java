@@ -13,7 +13,7 @@ public class Player extends Actor implements AnimationInterface
     private static GreenfootImage[] leftMvt = new GreenfootImage[4];
     private static GreenfootImage[] upMvt = new GreenfootImage[4];
     private static GreenfootImage[] downMvt = new GreenfootImage[4];
-    
+
     //imgs w/ mask
     private static GreenfootImage[] mrightMvt = new GreenfootImage[4];
     private static GreenfootImage[] mleftMvt = new GreenfootImage[4];
@@ -36,7 +36,7 @@ public class Player extends Actor implements AnimationInterface
 
     public Player(){
         if(!createdImages) createImages();
-        setImage("Walking Sprites/Pm-F1.png");
+        setImage("Walking Sprites/P-F1.png");
     }    
 
     /**
@@ -51,7 +51,7 @@ public class Player extends Actor implements AnimationInterface
                 leftMvt[i-1] = new GreenfootImage("Walking Sprites/P-L"+i+".png");
                 upMvt[i-1] = new GreenfootImage("Walking Sprites/P-B"+i+".png");
                 downMvt[i-1] = new GreenfootImage("Walking Sprites/P-F"+i+".png");
-                
+
                 mrightMvt[i-1] = new GreenfootImage("Walking Sprites/Pm-R"+i+".png");
                 mleftMvt[i-1] = new GreenfootImage("Walking Sprites/Pm-L"+i+".png");
                 mupMvt[i-1] = new GreenfootImage("Walking Sprites/Pm-B"+i+".png");
@@ -60,15 +60,15 @@ public class Player extends Actor implements AnimationInterface
             /*
             for(int i=0; i<rightMvt.length;i++)
             {
-                rightMvt[i].scale(rightMvt[i].getWidth()*scaleNumber/100,rightMvt[i].getHeight()*scaleNumber/100);
-                leftMvt[i].scale(leftMvt[i].getWidth()*scaleNumber/100,leftMvt[i].getHeight()*scaleNumber/100);
+            rightMvt[i].scale(rightMvt[i].getWidth()*scaleNumber/100,rightMvt[i].getHeight()*scaleNumber/100);
+            leftMvt[i].scale(leftMvt[i].getWidth()*scaleNumber/100,leftMvt[i].getHeight()*scaleNumber/100);
             }
             for(int i=0; i<upMvt.length;i++)
             {
-                upMvt[i].scale(upMvt[i].getWidth()*scaleNumber/100,upMvt[i].getHeight()*scaleNumber/100);
-                downMvt[i].scale(downMvt[i].getWidth()*scaleNumber/100,downMvt[i].getHeight()*scaleNumber/100);
+            upMvt[i].scale(upMvt[i].getWidth()*scaleNumber/100,upMvt[i].getHeight()*scaleNumber/100);
+            downMvt[i].scale(downMvt[i].getWidth()*scaleNumber/100,downMvt[i].getHeight()*scaleNumber/100);
             }
-            */
+             */
 
         }
     }    
@@ -117,7 +117,6 @@ public class Player extends Actor implements AnimationInterface
     {
         animationCount++;
         move();
-        isTouchingShopper();
         isInfected();
         isTouchingItem();
     }    
@@ -179,7 +178,6 @@ public class Player extends Actor implements AnimationInterface
         if(invalidMove()) setLocation(getX()-dx,getY()-dy);
     } 
 
-    
     /**
      * invalidMove - checks if the last move was invalid
      * 
@@ -213,15 +211,16 @@ public class Player extends Actor implements AnimationInterface
      * Checks if player is touching shopper
      */
     public void isTouchingShopper(){
-        if(isInfected){
-            timer.removeTime();
+        if(!maskOn){
+            if(isInfected){
+                timer.removeTime();
+            }
+            else{
+                isInfected = true;
+                timer = new Timer(5000);
+                getWorld().addObject(timer,100,100); //To be changed!
+            }
         }
-        else{
-            isInfected = true;
-            timer = new Timer(5000);
-            getWorld().addObject(timer,100,100); //To be changed!
-        }
-
     }    
 
     /**
@@ -252,16 +251,16 @@ public class Player extends Actor implements AnimationInterface
             }    
         }    
     }    
-    
+
     private void getMask(){
         if(Greenfoot.isKeyDown("m")){
             StoreWorld w = (StoreWorld) getWorld();
-            if(true){ //w.decrementMaskCount()
+            if(true && !isInfected){ //w.decrementMaskCount()
                 maskOn = true;
             }    
         }    
     }    
-    
+
     public void newMission(){
         maskOn = false;
     }    
