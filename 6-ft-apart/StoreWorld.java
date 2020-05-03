@@ -108,9 +108,9 @@ public class StoreWorld extends World
             if (itemsToCollect.size() == 0) {
                 nextMission();
             }
-            System.out.println("updatinggg");
+            //System.out.println("updatinggg");
             missionBox.update(mission, itemsToCollect);
-        } else System.out.println("not there");
+        } //else System.out.println("not there");
         
         removeObject(item);
     }
