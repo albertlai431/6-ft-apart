@@ -19,4 +19,8 @@ public abstract class Item extends Actor
     public String getName(){
         return imgName;
     }
+    
+    public void act(){
+        
+    }    
 }

@@ -20,8 +20,6 @@ public class Player extends Actor implements AnimationInterface
     private static GreenfootImage[] mupMvt = new GreenfootImage[4];
     private static GreenfootImage[] mdownMvt = new GreenfootImage[4];
 
-    public int sanitizerCount = 0;
-    public int maskCount = 0;
     private int speed = 2;
     private int width = getImage().getWidth();
     private int height = getImage().getHeight();
@@ -38,6 +36,7 @@ public class Player extends Actor implements AnimationInterface
 
     public Player(){
         if(!createdImages) createImages();
+        setImage("Walking Sprites/Pm-F1.png");
     }    
 
     /**
@@ -202,18 +201,13 @@ public class Player extends Actor implements AnimationInterface
      * 
      * @return boolean              true if player has no more sanitizers
      */
-    private boolean loseOneSanitizer()
+    private void loseOneSanitizer()
     {
-        sanitizerCount--;
-        //decrement scorebar
-        if(sanitizerCount==0) return true;
-        return false;
+        StoreWorld w = (StoreWorld) getWorld();
+        if(w.decrementSanitizerCount()){
+            //gameover
+        }    
     }
-
-    private void addOneSanitizer(){
-        sanitizerCount++;
-        //increment scorebar
-    }    
 
     /**
      * Checks if player is touching shopper
@@ -240,20 +234,19 @@ public class Player extends Actor implements AnimationInterface
                 getWorld().removeObject(timer);
             }    
             else if(timer==null){
-                if(loseOneSanitizer()) System.out.println("u dead");//die
+                loseOneSanitizer();
             }    
         }
     }    
 
     private void isTouchingItem(){
         if(isTouching(Item.class)){
+            StoreWorld w = (StoreWorld) getWorld();
             if(isTouching(Sanitizer.class)){
-                sanitizerCount++;
-                //adjust scorebar
+                w.incrementSanitizerCount();
             }    
             else if(isTouching(FaceMask.class)){
-                maskCount++;
-                //adjust scorebar
+                w.incrementMaskCount();
             }    
             else{
                 //call some world method to decrement item + adjust mission box
