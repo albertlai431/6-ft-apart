@@ -13,23 +13,31 @@ public class MissionBox extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int fontSize = 15;
-    GreenfootImage missionBox = new GreenfootImage(150,50);
+    GreenfootImage missionBox = new GreenfootImage(1,1);
     GreenfootImage itemImg = new GreenfootImage(50,50);
-    GreenfootImage missionDescription = new GreenfootImage("A bag of chips", fontSize,Color.WHITE,Color.BLACK);
     
     //everytime you make a missionbox instance, call it with the item as a parameter
     
-    public MissionBox(Actor item){
-        missionBox.setColor(new Color(213,172, 11));
-        missionBox.fill();
-        
-        itemImg = item.getImage();
-        itemImg.scale(missionBox.getHeight(),missionBox.getHeight());
-        missionBox.drawImage(itemImg,0,0);
-        missionBox.drawImage(new GreenfootImage("Next Mission: ", fontSize,Color.WHITE,Color.BLACK), itemImg.getWidth(),0);
-        missionBox.drawImage(missionDescription,missionBox.getWidth()-missionDescription.getWidth()-5,fontSize+5);
+    public MissionBox(){
         setImage(missionBox);
     }
+    
+    public void update(int missionNum, Actor[] item){
+        if(item.length==1){
+            fontSize = 11;
+        }
+        missionBox = new GreenfootImage(item.length*(itemImg.getWidth()-15)+10,itemImg.getHeight());
+        missionBox.setColor(new Color(213,172, 11));
+        missionBox.fill();
+        for(int i = 0;i<item.length;i++){
+            itemImg = item[i].getImage();
+            itemImg.scale(missionBox.getHeight()-15,missionBox.getHeight()-15);
+            missionBox.drawImage(itemImg,i*itemImg.getWidth()+5,missionBox.getHeight()-itemImg.getHeight());
+        }
+        missionBox.drawImage(new GreenfootImage("Mission "+missionNum, fontSize,Color.WHITE,Color.BLACK), 0,0);
+        setImage(missionBox);
+    }
+    
     
     public void act() 
     {
