@@ -1,3 +1,4 @@
+
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 
@@ -42,7 +43,12 @@ public class Shopper extends Actor implements AnimationInterface
 
     public Shopper(int level){
         this.level = level;
-        this.speed = level;
+        this.speed = level;        
+        if(!createdImages) createImages();
+        
+        if(level==1) setImage(downMvt1[0]);
+        else if(level==2) setImage(downMvt2[0]);
+        else setImage(downMvt3[0]);
     }
 
     public void addedToWorld (World w){

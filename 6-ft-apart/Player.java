@@ -25,7 +25,7 @@ public class Player extends Actor implements AnimationInterface
     private int height = getImage().getHeight();
     private boolean isInfected = false;
     private long animationCount = 0;
-    private boolean maskOn = true;
+    private boolean maskOn = false;
 
     private static boolean createdImages = false;
     private static final int scaleNumber = 100;
@@ -240,21 +240,29 @@ public class Player extends Actor implements AnimationInterface
     }    
 
     private void isTouchingItem(){
-        if(isTouching(Item.class)){
+        Item i = (Item) getOneObjectAtOffset(0, 0, Item.class);
+        if(i!=null){
             StoreWorld w = (StoreWorld) getWorld();
+            w.pickUpItem(i);
             if(isTouching(Sanitizer.class)){
                 w.incrementSanitizerCount();
             }    
             else if(isTouching(FaceMask.class)){
                 w.incrementMaskCount();
             }    
-            else{
-                //call some world method to decrement item + adjust mission box
-            }    
         }    
     }    
     
     private void getMask(){
-        
+        if(Greenfoot.isKeyDown("m")){
+            StoreWorld w = (StoreWorld) getWorld();
+            if(true){ //w.decrementMaskCount()
+                maskOn = true;
+            }    
+        }    
+    }    
+    
+    public void newMission(){
+        maskOn = false;
     }    
 }
