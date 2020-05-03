@@ -14,6 +14,7 @@ public class Freezer extends Obstacle
      */
     public void act() 
     {
-        // Add your action code here.
+        setLocation(getWorld().getWidth()/2,getWorld().getHeight()/2);
+        
     }    
 }
