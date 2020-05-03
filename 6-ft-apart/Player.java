@@ -240,13 +240,14 @@ public class Player extends Actor implements AnimationInterface
         if(getObjectsInRange(height,Item.class).size()>0){
             Item i = (Item) getObjectsInRange(height,Item.class).get(0);
             StoreWorld w = (StoreWorld) getWorld();
-            w.pickUpItem(i);
+            
             if(isTouching(Sanitizer.class)){
                 w.incrementSanitizerCount();
             }    
             else if(isTouching(FaceMask.class)){
                 w.incrementMaskCount();
             }    
+            w.pickUpItem(i);
         }
     }    
 
