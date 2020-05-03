@@ -9,10 +9,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Player extends Actor implements AnimationInterface
 {
     //animation images
-    private static GreenfootImage[] rightMvt = new GreenfootImage[5];
-    private static GreenfootImage[] leftMvt = new GreenfootImage[5];
-    private static GreenfootImage[] upMvt = new GreenfootImage[8];
-    private static GreenfootImage[] downMvt = new GreenfootImage[8];
+    private static GreenfootImage[] rightMvt = new GreenfootImage[4];
+    private static GreenfootImage[] leftMvt = new GreenfootImage[4];
+    private static GreenfootImage[] upMvt = new GreenfootImage[4];
+    private static GreenfootImage[] downMvt = new GreenfootImage[4];
+    
+    //imgs w/ mask
+    private static GreenfootImage[] mrightMvt = new GreenfootImage[4];
+    private static GreenfootImage[] mleftMvt = new GreenfootImage[4];
+    private static GreenfootImage[] mupMvt = new GreenfootImage[4];
+    private static GreenfootImage[] mdownMvt = new GreenfootImage[4];
 
     public int sanitizerCount = 0;
     public int maskCount = 0;
@@ -21,9 +27,12 @@ public class Player extends Actor implements AnimationInterface
     private int height = getImage().getHeight();
     private boolean isInfected = false;
     private long animationCount = 0;
+    private boolean maskOn = true;
 
     private static boolean createdImages = false;
     private static final int scaleNumber = 100;
+    private int frameRate = 7;
+    private int imageNumber = 0;
 
     private Timer timer;
 
@@ -37,21 +46,19 @@ public class Player extends Actor implements AnimationInterface
     public static void createImages(){
         if(!createdImages){
             createdImages = true;
-            for(int i=0; i<rightMvt.length; i++)
+            for(int i=1; i<=rightMvt.length; i++)
             {
-                rightMvt[i] = new GreenfootImage("pilotRight"+i+".png");
-                leftMvt[i] = new GreenfootImage("pilotRight"+i+".png");
+                rightMvt[i-1] = new GreenfootImage("Walking Sprites/P-R"+i+".png");
+                leftMvt[i-1] = new GreenfootImage("Walking Sprites/P-L"+i+".png");
+                upMvt[i-1] = new GreenfootImage("Walking Sprites/P-B"+i+".png");
+                downMvt[i-1] = new GreenfootImage("Walking Sprites/P-F"+i+".png");
+                
+                mrightMvt[i-1] = new GreenfootImage("Walking Sprites/Pm-R"+i+".png");
+                mleftMvt[i-1] = new GreenfootImage("Walking Sprites/Pm-L"+i+".png");
+                mupMvt[i-1] = new GreenfootImage("Walking Sprites/Pm-B"+i+".png");
+                mdownMvt[i-1] = new GreenfootImage("Walking Sprites/Pm-F"+i+".png");
             }
-            for(int i=0; i<leftMvt.length; i++)
-            {
-                leftMvt[i].mirrorHorizontally();
-            }
-            for(int i=0; i<upMvt.length; i++)
-            {
-                upMvt[i] = new GreenfootImage("pilotUp"+i+".png");
-                downMvt[i] = new GreenfootImage("pilotDown"+i+".png");
-            }
-
+            /*
             for(int i=0; i<rightMvt.length;i++)
             {
                 rightMvt[i].scale(rightMvt[i].getWidth()*scaleNumber/100,rightMvt[i].getHeight()*scaleNumber/100);
@@ -62,20 +69,45 @@ public class Player extends Actor implements AnimationInterface
                 upMvt[i].scale(upMvt[i].getWidth()*scaleNumber/100,upMvt[i].getHeight()*scaleNumber/100);
                 downMvt[i].scale(downMvt[i].getWidth()*scaleNumber/100,downMvt[i].getHeight()*scaleNumber/100);
             }
+            */
 
         }
     }    
 
     public void animateMovementUp(){
+        if(animationCount%frameRate == 0)
+        {
+            imageNumber = (imageNumber + 1)% (upMvt.length);
+            if(!maskOn) setImage(upMvt[imageNumber]);
+            else setImage(mupMvt[imageNumber]);
+        }
     }    
 
     public void animateMovementDown(){
+        if(animationCount%frameRate == 0)
+        {
+            imageNumber = (imageNumber + 1)% (downMvt.length);
+            if(!maskOn) setImage(downMvt[imageNumber]);
+            else setImage(mdownMvt[imageNumber]);
+        }
     }    
 
     public void animateMovementLeft(){
+        if(animationCount%frameRate == 0)
+        {
+            imageNumber = (imageNumber + 1)% (leftMvt.length);
+            if(!maskOn) setImage(leftMvt[imageNumber]);
+            else setImage(mleftMvt[imageNumber]);
+        }
     }    
 
     public void animateMovementRight(){
+        if(animationCount%frameRate == 0)
+        {
+            imageNumber = (imageNumber + 1)% (rightMvt.length);
+            if(!maskOn) setImage(rightMvt[imageNumber]);
+            else setImage(mrightMvt[imageNumber]);
+        }
     }    
 
     /**
@@ -99,7 +131,7 @@ public class Player extends Actor implements AnimationInterface
         int dx = 0, dy = 0;
         if(Greenfoot.isKeyDown("a"))//runs if "a" is pressed and the player is past the starting location
         {
-            //animateMovementLeft();
+            animateMovementLeft();
             if(Greenfoot.isKeyDown("s")){
                 dx = -speed; dy = speed;
             }
@@ -110,7 +142,7 @@ public class Player extends Actor implements AnimationInterface
         }
         else if(Greenfoot.isKeyDown("d"))//runs if "d" is pressed
         {
-            //animateMovementRight();
+            animateMovementRight();
             if(Greenfoot.isKeyDown("s")){
                 dx = speed; dy = speed;
             }
@@ -121,7 +153,7 @@ public class Player extends Actor implements AnimationInterface
         }
         else if(Greenfoot.isKeyDown("w"))//runs if "d" is pressed
         {
-            //animateMovementUp();
+            animateMovementUp();
             if(Greenfoot.isKeyDown("a")) {
                 dx = -speed; dy = -speed;
             }
@@ -132,7 +164,7 @@ public class Player extends Actor implements AnimationInterface
         }
         else if(Greenfoot.isKeyDown("s"))//runs if "d" is pressed
         {
-            //animateMovementDown();
+            animateMovementDown();
             if(Greenfoot.isKeyDown("a")) {
                 dx = -speed; dy = speed;
             }
@@ -227,5 +259,9 @@ public class Player extends Actor implements AnimationInterface
                 //call some world method to decrement item + adjust mission box
             }    
         }    
+    }    
+    
+    private void getMask(){
+        
     }    
 }

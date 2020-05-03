@@ -31,10 +31,12 @@ public class Shopper extends Actor implements AnimationInterface
         else{
             this.speed = 2;
             this.target = true;
-        }    
-        
-        getWorld().addObject(radius,getX(),getY());
+        }            
     }
+    
+    public void addedToWorld (World w){
+        getWorld().addObject(radius,getX(),getY());
+    }    
     
     /**
      * Act - do whatever the Shopper wants to do. This method is called whenever
