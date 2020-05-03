@@ -211,17 +211,12 @@ public class Player extends Actor implements AnimationInterface
      * Checks if player is touching shopper
      */
     public void isTouchingShopper(){
-        if(!maskOn){
-            if(isInfected){
-                timer.removeTime();
-            }
-            else{
-                isInfected = true;
-                timer = new Timer(5000);
-                getWorld().addObject(timer,100,100); //To be changed!
-            }
+        if(!maskOn && !isInfected){
+            isInfected = true;
+            timer = new Timer(5000);
+            getWorld().addObject(timer,100,100); //To be changed!
         }
-    }    
+    }
 
     /**
      * What to do if player is infected
