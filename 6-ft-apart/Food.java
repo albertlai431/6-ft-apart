@@ -11,7 +11,7 @@ public class Food extends Item
     private String imgName;
     
     public Food(String name) {
-        super(name);
+        super("Food/" + name);
         imgName = name;
     }
 }

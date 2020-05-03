@@ -12,10 +12,10 @@ public class StoreWorld extends World
     private ArrayList<Item> itemsToCollect = new ArrayList<Item>();
     private final int MAX_ITEMS = 4;
     private final String[]SHELF_ITEMS = {
-            "apple", "banana", "orange", "pear", "peach"
+            "Apple", "Banana", "Orange", "Pear", "Peach"
         };
     private final String[]FREEZER_ITEMS = {
-            "milk", "eggs", "pork", "chicken", "beef"
+            "Milk", "Chicken", "Steak"
         };
 
     private MissionBox missionBox = new MissionBox();
