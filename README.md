@@ -27,4 +27,4 @@ Both masks and sanitizers can also be collected. Masks can be used for immunity 
 Are you ready to complete your missions? Great, let's go! 😃
 
 ## Credits
-This fun project was built during [TOHACKS](https://devpost.com/software/6-feet-apart) with [Seven Jang](https://github.com/sevenj7), [Ethan Kang](https://github.com/Eathem), and [Enoch Poon](https://github.com/EnochPoon). The incredible Graphics were created solely by [Ethan Kang](https://github.com/Eathem). 
+This fun project was built during [TOHACKS](https://devpost.com/software/6-feet-apart) with [Seven Jang](https://github.com/sevenj7), [Ethan Kang](https://github.com/Eathem), and [Enoch Poon](https://github.com/EnochPoon). The incredible graphics were created solely by [Ethan Kang](https://github.com/Eathem). 
